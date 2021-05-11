@@ -33,6 +33,7 @@ class BookSearch extends Component {
     searchBooks = (query) => {
         query !== ''
             ? BooksAPI.search(query).then((books) => {
+                if (books instanceof Array) {
                     const filteredBooks = books.filter((book) => (
                         book.imageLinks && book.imageLinks.thumbnail && true
                     ))
@@ -40,13 +41,16 @@ class BookSearch extends Component {
                     this.setState(() => ({
                         results: (filteredBooks && filteredBooks.length > 0) ? filteredBooks : []
                     }))
-
-                }).catch(err => {
-                    console.log(err)
+                } else {
                     this.setState(() => ({
                         results: []
                     }))
-                })
+                }
+              }).catch(err => {
+                    this.setState(() => ({
+                        results: []
+                    }))
+              })
             : this.setState(() => ({
                 results: []
             }))

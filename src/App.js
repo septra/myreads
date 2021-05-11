@@ -26,6 +26,7 @@ class BooksApp extends React.Component {
             const bookIndex = books.findIndex(x => x.id === book.id)
 
             if (bookIndex === -1) {
+                book.shelf = newShelf
                 const newBookList = books.concat([book])
                 return {books: newBookList}
             } else {

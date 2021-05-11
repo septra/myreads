@@ -6,12 +6,18 @@ class Shelf extends Component {
 
         const { title, books, onBookChange } = this.props
 
+        const sortedBooks = books.sort(function(a, b){
+            if(a.id < b.id) { return -1; }
+            if(a.id > b.id) { return 1; }
+            return 0;
+        })
+
         return (
             <div className="bookshelf">
               <h2 className="bookshelf-title">{title}</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                    {books.map((book) => ( 
+                    {sortedBooks.map((book) => ( 
                         <li key={book.title}>
                             <Book book={book} onBookChange={onBookChange} />
                         </li>

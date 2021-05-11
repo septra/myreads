@@ -2,13 +2,24 @@ import React, { Component } from 'react'
 
 class Book extends Component {
 
+    state = {
+        shelf: 'none'
+    }
+
+    componentDidMount () {
+        this.setState(() => ({
+            shelf: this.props.book.shelf
+        }))
+    }
+
     render() {
 
         const { book } = this.props
+        const { shelf } = this.state
 
-        const read = 'read' === book.shelf
-        const wantToRead = 'wantToRead' === book.shelf
-        const currenlyReading = 'currentlyReading' === book.shelf
+        const read = 'read' === shelf
+        const wantToRead = 'wantToRead' === shelf
+        const currenlyReading = 'currentlyReading' === shelf
         const none = !read && !wantToRead && !currenlyReading
 
         return (

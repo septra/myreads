@@ -20,19 +20,23 @@ class BooksApp extends React.Component {
             })
     }
 
-    onBookChange = (newShelf, bookId) => {
+    onBookChange = (newShelf, book) => {
         this.setState((currentState) => {
             const books = currentState.books
-            const bookIndex = books.findIndex(x => x.id === bookId)
-            books[bookIndex].shelf = newShelf
-            return {
-                books: books
+            const bookIndex = books.findIndex(x => x.id === book.id)
+
+            if (bookIndex === -1) {
+                const newBookList = books.concat([book])
+                return {books: newBookList}
+            } else {
+                newShelf === 'none' 
+                    ? books.splice(bookIndex, 1)
+                    : books[bookIndex].shelf = newShelf
+                return {books: books}
             }
         })
 
-        const books = this.state.books
-        const bookIndex = books.findIndex(x => x.id === bookId)
-        BooksAPI.update(books[bookIndex], newShelf)
+        BooksAPI.update(book, newShelf)
     }
 
     render() {

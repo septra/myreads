@@ -12,6 +12,11 @@ class Book extends Component {
         }))
     }
 
+    handleShelfChange = (e) => {
+        e.preventDefault()
+        console.log(e.target.value)
+    }
+
     render() {
 
         const { book } = this.props
@@ -26,7 +31,7 @@ class Book extends Component {
                     backgroundImage: `url(${book.imageLinks.thumbnail})`
                 }}></div>
                 <div className="book-shelf-changer">
-                  <select value={shelf}>
+                  <select value={shelf} onChange={this.handleShelfChange}>
                     <option value="move" disabled >Move to...</option>
                     <option value="currentlyReading" >Currently Reading</option>
                     <option value="wantToRead" >Want to Read</option>

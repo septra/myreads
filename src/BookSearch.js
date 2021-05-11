@@ -18,6 +18,18 @@ class BookSearch extends Component {
         )
     }
 
+    assignShelf = (book) => {
+        const { selectedBooks } = this.state
+        const bookIndex = selectedBooks.findIndex(x => x.id === book.id)
+
+        const shelf = bookIndex === -1
+            ? "none"
+            : selectedBooks[bookIndex].shelf
+
+        book.shelf = shelf
+        return book
+    }
+
     searchBooks = (query) => {
         query !== ''
             ? BooksAPI.search(query).then((books) => {
@@ -60,7 +72,7 @@ class BookSearch extends Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                  {this.state.results.map((book) => (
+                  {results.map(this.assignShelf).map((book) => (
                     <li key={book.id}>
                         <Book book={book} />
                     </li>

@@ -3,24 +3,24 @@ import React, { Component } from 'react'
 class Book extends Component {
 
     state = {
-        shelf: 'none'
-    }
-
-    componentDidMount () {
-        this.setState(() => ({
-            shelf: this.props.book.shelf
-        }))
+        book: this.props.book
     }
 
     handleShelfChange = (e) => {
         e.preventDefault()
-        console.log(e.target.value)
+        const { value } = e.target;
+        this.setState((currentState) => { 
+            const book = currentState.book
+            book.shelf = value
+            return {
+                book: book
+            }
+        })
     }
 
     render() {
 
-        const { book } = this.props
-        const { shelf } = this.state
+        const { book } = this.state
 
         return (
             <div className="book">
@@ -31,7 +31,7 @@ class Book extends Component {
                     backgroundImage: `url(${book.imageLinks.thumbnail})`
                 }}></div>
                 <div className="book-shelf-changer">
-                  <select value={shelf} onChange={this.handleShelfChange}>
+                  <select value={book.shelf} onChange={this.handleShelfChange}>
                     <option value="move" disabled >Move to...</option>
                     <option value="currentlyReading" >Currently Reading</option>
                     <option value="wantToRead" >Want to Read</option>
@@ -41,7 +41,7 @@ class Book extends Component {
                 </div>
               </div>
               <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors && book.authors.length > 0 ? book.authors.join() : ''}</div>
+              <div className="book-authors">{book.authors && book.authors.length > 0 ? book.authors.join() : ''}</div>
             </div>
             
         )

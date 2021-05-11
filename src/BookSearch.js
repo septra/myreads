@@ -7,7 +7,14 @@ class BookSearch extends Component {
 
     state = {
         query: '',
-        results: []
+        results: [],
+        selectedBooks: this.props.selectedBooks
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+       return {
+          selectedBooks: nextProps.selectedBooks
+      };
     }
 
     updateQuery = (value) => {
@@ -37,8 +44,6 @@ class BookSearch extends Component {
                     book.imageLinks && book.imageLinks.thumbnail && true
                 ))
 
-                console.log(filteredBooks)
-
                 this.setState(() => ({
                     results: (filteredBooks && filteredBooks.length > 0) ? filteredBooks : []
                 }))
@@ -50,6 +55,8 @@ class BookSearch extends Component {
     }
 
     render() {
+        const { results } = this.state
+        const { onBookChange } = this.props
         return (
           <div className="search-books">
             <div className="search-books-bar">
@@ -74,7 +81,7 @@ class BookSearch extends Component {
               <ol className="books-grid">
                   {results.map(this.assignShelf).map((book) => (
                     <li key={book.id}>
-                        <Book book={book} />
+                        <Book book={book} onBookChange={onBookChange} />
                     </li>
                   ))}
               </ol>

@@ -21,7 +21,6 @@ class BooksApp extends React.Component {
     }
 
     onBookChange = (newShelf, bookId) => {
-        console.log(newShelf, bookId)
         this.setState((currentState) => {
             const books = currentState.books
             const bookIndex = books.findIndex(x => x.id === bookId)
@@ -30,6 +29,10 @@ class BooksApp extends React.Component {
                 books: books
             }
         })
+
+        const books = this.state.books
+        const bookIndex = books.findIndex(x => x.id === bookId)
+        BooksAPI.update(books[bookIndex], newShelf)
     }
 
     render() {

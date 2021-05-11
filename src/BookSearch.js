@@ -8,13 +8,6 @@ class BookSearch extends Component {
     state = {
         query: '',
         results: [],
-        selectedBooks: this.props.selectedBooks
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState){
-       return {
-          selectedBooks: nextProps.selectedBooks
-      };
     }
 
     updateQuery = (value) => {
@@ -26,7 +19,7 @@ class BookSearch extends Component {
     }
 
     assignShelf = (book) => {
-        const { selectedBooks } = this.state
+        const { selectedBooks } = this.props
         const bookIndex = selectedBooks.findIndex(x => x.id === book.id)
 
         const shelf = bookIndex === -1
